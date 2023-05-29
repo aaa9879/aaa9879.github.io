@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rate website</title>
+        <meta charset="UTF-8">
+        <meta name="description" content=" rate convert">
+        <link rel="stylesheet" href="mystyle.css">
+    </head>
+    <body>
+        <h1 class="title">This is the rate convert website</h1>
+        台幣:<input id="Taiwan" type="number">
+        <br>
+        <button class="mybutton" onclick="onload()">rate convert</button>
+        <button onclick="reset()">Reset</button><!--<4>-->
+        <p id="usd">美金:</p>
+        <p id="eur">歐元:</p>
+        <p id="jpy">日圓:</p>
+        <p id="krw">韓元:</p>
+        <p id="aud">澳幣:</p>
+        <hr>
+        <script>
+            function onload(){
+                var amount = parseFloat(document.getElementById("Taiwan").value);
+                if(amount==null){//<5>
+                    alert("Must be input moeny!!!");
+                }
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "rate.xml",false);
+                xhttp.send();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState === 4 && this.status === 200) {
+                        var xml = xhttp.responseXML;
+                        var rates = xml.getElementsByTagName("rates");
+
+                        var usdRate = parseFloat(rates[0].childNodes[0].nodeValue);
+                        var eurRate = parseFloat(rates[1].childNodes[0].nodeValue);
+                        var jpyRate = parseFloat(rates[2].childNodes[0].nodeValue);
+                        var krwRate = parseFloat(rates[3].childNodes[0].nodeValue);
+                        var audRate = parseFloat(rates[4].childNodes[0].nodeValue);
+                        
+                        //<1>
+                        var usdAmount = (amount / usdRate).toFixed(2);
+                        var eurAmount = (amount / eurRate).toFixed(2);
+                        var jpyAmount = (amount / jpyRate).toFixed(2);
+                        var krwAmount = (amount / krwRate).toFixed(2);
+                        var audAmount = (amount / audRate).toFixed(2);
+
+                        document.getElementById("usd").textContent = "美金：" + usdAmount;
+                        document.getElementById("eur").textContent = "歐元：" + eurAmount;
+                        document.getElementById("jpy").textContent = "日圓：" + jpyAmount;
+                        document.getElementById("krw").textContent = "韓元：" + krwAmount;
+                        document.getElementById("aud").textContent = "澳幣：" + audAmount;
+                    }
+                }
+            }
+            function reset(){//<4>
+                relocation.reload();
+            }
+            </script>
+    </body>
+</html>
