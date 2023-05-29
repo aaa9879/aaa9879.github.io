@@ -1,0 +1,18 @@
+/*<3>*/
+.mybutton{
+    background-color:yellow;
+    color:black;
+    width:100px;
+}
+[class|="title"]{
+    background-color: wheat;
+}
+[class|="title"]:hover{
+    background-color:orange;
+}
+p{
+    color:wheat;
+}
+hr{
+    color:blue;
+}
